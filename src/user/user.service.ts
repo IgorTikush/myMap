@@ -85,7 +85,7 @@ export class UserService {
     };
   }
 
-  findByEmail(email: string) {
+  findByEmail(email: string): Promise<IUserDoc> {
     return this.userModel.findOne({
       email,
     });

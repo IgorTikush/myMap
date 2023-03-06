@@ -11,5 +11,6 @@ import { TokenModule } from '../token/token.module';
   imports: [UserInst, TokenModule, JwtModule.register({ secret: config.get('jwtAccessSecret') })],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}

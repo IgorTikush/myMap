@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { verify } from 'argon2';
 
 import { IUserAuth } from './interfaces/user-auth-interface';
+import { TokenService } from '../token/token.service';
 import { IUserDoc } from '../user/interfaces/IUser.interface';
 import { UserService } from '../user/user.service';
 
@@ -9,6 +10,7 @@ import { UserService } from '../user/user.service';
 export class AuthService {
   constructor(
     private readonly userService: UserService,
+    private readonly tokenService: TokenService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<IUserAuth>|null {
@@ -34,5 +36,9 @@ export class AuthService {
       email,
       isBlocked,
     };
+  }
+
+  async validateToken(tokenId: string) {
+    return this.tokenService.findByTokenId(tokenId);
   }
 }

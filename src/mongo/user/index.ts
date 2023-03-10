@@ -10,6 +10,7 @@ export const UserSchema = new mongoose.Schema({
   },
   password: String,
   isBlocked: Boolean,
+  lastActivity: Date,
 }, {
   timestamps: true,
 });

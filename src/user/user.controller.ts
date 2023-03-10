@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { UserTokensDTO } from './dto/user-tokens.dto';
@@ -20,9 +20,14 @@ export class UserController {
   @UseGuards(AuthGuard('local'))
   async login(@Req() req): Promise<UserTokensDTO> {
     const userId = req.user._id;
-    console.log(req.user);
     const userTokens = await this.userService.getTokens({ userId });
 
     return new UserTokensDTO(userTokens);
+  }
+
+  @Get('huy')
+  @UseGuards(AuthGuard('jwt'))
+  async huy() {
+    return 'huy';
   }
 }

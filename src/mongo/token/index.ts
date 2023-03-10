@@ -15,6 +15,7 @@ export const TokenSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  lastActivity: Date,
 }, {
   timestamps: true,
 });

@@ -90,4 +90,18 @@ export class UserService {
       email,
     });
   }
+
+  async updateLastActivity(id: string) {
+    return this.userModel.updateOne({
+      _id: id,
+    }, {
+      $set: {
+        lastActivity: new Date(),
+      },
+    });
+  }
+
+  findUserById(id: string, projection = {}): Promise<any> {
+    return this.userModel.findOne({ _id: id }, projection).lean() as any;
+  }
 }

@@ -14,6 +14,13 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+    optionsSuccessStatus: 204,
+    credentials: true,
+  });
+
   app.use(logger('dev'));
   app.use(compression());
   app.use(helmet());

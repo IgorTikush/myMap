@@ -25,9 +25,10 @@ export class UserController {
     return new UserTokensDTO(userTokens);
   }
 
-  @Get('huy')
+  @Get()
   @UseGuards(AuthGuard('jwt'))
-  async huy() {
-    return 'huy';
+  // TO DO: прописать DTO
+  async getUser(@Req() { user }) {
+    return this.userService.findUserById(user._id);
   }
 }

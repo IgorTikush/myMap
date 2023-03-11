@@ -1,7 +1,7 @@
 const config = {};
 
-config.mongo = 'mongodb://localhost:27017/myMap';
-config.jwtRefreshSecret = 'huyPizda';
-config.jwtAccessSecret = 'zalupa';
+config.mongo = 'mongodb://localhost:27017';
+config.jwtRefreshSecret = 'someRefreshSecret';
+config.jwtAccessSecret = 'someAccessSecret';
 
 module.exports = config;

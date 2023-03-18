@@ -7,6 +7,7 @@ import { MorganInterceptor, MorganModule } from 'nest-morgan';
 import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { UserModule } from './user/user.module';
+import { MapModule } from './map/map.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from './user/user.module';
     TokenModule,
     UserModule,
     AuthModule,
+    MapModule,
   ],
   providers: [
     {

@@ -1,21 +1,24 @@
 ---
 - hosts: prod
-  vars:
-    project_path: /var/www/nodejs
   tasks:
-#  - name: Delete content & directory
-#    ansible.builtin.file:
-#      state: absent
-#      path: /root/backend
-#  - name: Create a directory if it does not exist
-#    ansible.builtin.file:
-#      path: /root/backend
-#      state: directory
-#      mode: '0755'
-#  - name: Read-write git checkout from github
-#    ansible.builtin.git:
-#      repo: https://github.com/IgorTikush/myMap.git
-#      dest: /root/backend
+  - name: stop api
+    command: 'pm2 delete api'
+    ignore_errors: yes
+  - name: Delete content & directory
+    ansible.builtin.file:
+      state: absent
+      path: /root/backend
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /root/backend
+      state: directory
+      mode: '0755'
+  - name: Read-write git checkout from github
+    ansible.builtin.git:
+      repo: https://github.com/IgorTikush/myMap.git
+      dest: /root/backend
   - name: Install packages based on package.json.
     yarn:
       path: /root/backend
+  - name: run start prod
+    command: bash -lc "cd /root/backend && pm2 start yarn --interpreter bash --name api -- start:prod"

@@ -5,9 +5,9 @@ config.jwtRefreshSecret = 'someRefreshSecret';
 config.jwtAccessSecret = 'someAccessSecret';
 
 config.aws = {
-  bucketName: 'pictures',
-  accessKey: '',
-  keyId: '',
+  bucketName: 'my-map-pictures',
+  accessKey: 'AKIA4EDQCLL4FGZYTLSW',
+  keyId: 'R9nVwcmL6wZTXQmlo7jl3DLqIRNcpbjWisfvBLZq',
 };
 
 module.exports = config;

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { MapService } from './map.service';
 import { AuthGuard } from '@nestjs/passport';
 import { S3Service } from '../s3/s3.service';
@@ -28,8 +28,9 @@ export class MapController {
 
   @Get('/:id/picture_upload_url')
   @UseGuards(AuthGuard('jwt'))
-  async getUploadPicture() {
+  async getUploadPicture(@Query() { mapId }) {
+    console.log(mapId);
     // verify user has access to this map
-    return this.s3Service.getSignedLinkToUpload();
+    return this.s3Service.getSignedLinkToUpload(mapId);
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
 import * as config from 'config';
+import { uid } from 'uid';
 
 @Injectable()
 export class S3Service {
@@ -9,14 +10,14 @@ export class S3Service {
   constructor() {
     this.s3 = new AWS.S3();
 
-    AWS.config.credentials = {
+    this.s3.config.credentials = {
       accessKeyId: config.get('aws.accessKey'),
       secretAccessKey: config.get('aws.keyId'),
     };
-    AWS.config.region = 'ap-east-1';
+    this.s3.config.region = 'ap-southeast-1';
   }
 
-  async getSignedLinkToUpload() {
+  async getSignedLinkToUpload(mapId: string) {
     // const {
     //   hk = false,
     //   isUserExtensions = false,
@@ -24,15 +25,17 @@ export class S3Service {
     // } = options;
 
     const bucket = config.get('aws.bucketName') as string;
-
+    console.log(bucket);
     const params = {
       Bucket: bucket,
-      // Key: urlKey,
+      Key: `${mapId}/${uid(25)}.jpeg`,
       Expires: 1200,
       // StorageClass: IntelligentStorageClass,
-      ContentType: 'application/jpeg',
+      ContentType: 'image/jpeg',
     };
 
-    return this.s3.getSignedUrl('putObject', params);
+    const url = await this.s3.getSignedUrl('putObject', params);
+    console.log(this.s3);
+    return { uploadUrl: url };
   }
 }

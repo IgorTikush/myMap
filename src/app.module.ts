@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { UserModule } from './user/user.module';
 import { MapModule } from './map/map.module';
+import { PictureModule } from './picture/picture.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { MapModule } from './map/map.module';
     UserModule,
     AuthModule,
     MapModule,
+    PictureModule,
   ],
   providers: [
     {

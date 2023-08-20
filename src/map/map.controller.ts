@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { S3Service } from '../s3/s3.service';
 
 @Controller('map')
+@UseGuards(AuthGuard('jwt'))
 export class MapController {
   constructor(
     private readonly mapService: MapService,
@@ -11,7 +12,6 @@ export class MapController {
   ) {}
 
   @Get('/:id')
-  @UseGuards(AuthGuard('jwt'))
   async getMap(@Param() { id }) {
     console.log(id);
 
@@ -19,7 +19,6 @@ export class MapController {
   }
 
   @Patch('/:id/add_country')
-  @UseGuards(AuthGuard('jwt'))
   async addCountryToMap(@Body() { countryIdToAdd }, @Param() { id: mapId }) {
     console.log(countryIdToAdd);
 
@@ -27,7 +26,6 @@ export class MapController {
   }
 
   @Get('/:id/picture_upload_url')
-  @UseGuards(AuthGuard('jwt'))
   async getUploadPicture(@Query() { mapId }) {
     console.log(mapId);
     // verify user has access to this map

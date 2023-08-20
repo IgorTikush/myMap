@@ -1,8 +1,7 @@
 # compiled output
 /dist
 /node_modules
-
-default.js
+/config/default.js
 
 # Logs
 logs

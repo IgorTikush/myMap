@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { MapService } from './map.service';
+import { Body, Controller, Get, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+
+import { MapService } from './map.service';
+import { PictureService } from '../picture/picture.service';
 import { S3Service } from '../s3/s3.service';
 
 @Controller('map')
@@ -8,14 +10,19 @@ import { S3Service } from '../s3/s3.service';
 export class MapController {
   constructor(
     private readonly mapService: MapService,
-    private readonly s3Service: S3Service
+    private readonly s3Service: S3Service,
+    private readonly pictureService: PictureService,
   ) {}
 
   @Get('/:id')
   async getMap(@Param() { id }) {
-    console.log(id);
+    const map: any = await this.mapService.getMap(id);
+    const pictures = await this.pictureService.getAllMapPictures(id);
 
-    return this.mapService.getMap(id);
+    return {
+      visitedCountries: map.visitedCountries,
+      pictures,
+    };
   }
 
   @Patch('/:id/add_country')

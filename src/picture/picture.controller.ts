@@ -16,13 +16,8 @@ export class PictureController {
       user: user._id,
       ...createPictureParams,
     };
-    console.log(createParams);
-    return this.pictureService.create(createParams);
-  }
 
-  @Get()
-  findAll() {
-    return this.pictureService.findAll();
+    return this.pictureService.create(createParams);
   }
 
   @Get(':id')

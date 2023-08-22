@@ -10,5 +10,6 @@ import { PictureInst } from '../mongo';
   ],
   controllers: [PictureController],
   providers: [PictureService],
+  exports: [PictureService],
 })
 export class PictureModule {}

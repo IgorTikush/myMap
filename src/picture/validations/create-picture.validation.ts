@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePictureValidation {
   @IsString()
@@ -8,4 +8,8 @@ export class CreatePictureValidation {
   @IsString()
   @IsNotEmpty()
   readonly mapId: string;
+
+  @IsArray()
+  @IsNotEmpty()
+  readonly coordinates: number[];
 }

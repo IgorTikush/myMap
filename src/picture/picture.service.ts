@@ -6,6 +6,7 @@ import { CreatePictureDto } from './dto/create-picture.dto';
 import { UpdatePictureDto } from './dto/update-picture.dto';
 import { IPicture } from './interfaces/picture.interface';
 import { IMap } from '../map/interfaces/map.interface';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class PictureService {
@@ -29,7 +30,9 @@ export class PictureService {
     return `This action updates a #${id} picture`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} picture`;
+  remove(id: string) {
+    const objId = new mongoose.Types.ObjectId(id);
+
+    return this.pictureModel.deleteOne(objId);
   }
 }

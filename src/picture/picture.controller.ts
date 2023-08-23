@@ -4,6 +4,7 @@ import { CreatePictureDto } from './dto/create-picture.dto';
 import { UpdatePictureDto } from './dto/update-picture.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { CreatePictureValidation } from './validations/create-picture.validation';
+import * as mongoose from 'mongoose';
 
 @Controller('picture')
 @UseGuards(AuthGuard('jwt'))
@@ -32,6 +33,7 @@ export class PictureController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.pictureService.remove(+id);
+    // сделать удаление с s3
+    return this.pictureService.remove(id);
   }
 }

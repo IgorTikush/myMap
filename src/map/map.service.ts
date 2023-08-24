@@ -22,4 +22,12 @@ export class MapService {
   async addCountry(countryIdToAdd, mapId) {
     return this.mapModel.updateOne({ _id: mapId }, { $addToSet: { visitedCountries: countryIdToAdd } });
   }
+
+  async removeCountry(countryIdToRemove, mapId) {
+    return this.mapModel.updateOne({ _id: mapId }, {
+      $pullAll: {
+        visitedCountries: [countryIdToRemove],
+      },
+    });
+  }
 }

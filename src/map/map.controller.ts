@@ -32,6 +32,13 @@ export class MapController {
     return this.mapService.addCountry(countryIdToAdd, mapId);
   }
 
+  @Patch('/:id/delete_country')
+  async deleteCountryFromMap(@Body() { countryIdToDelete }, @Param() { id: mapId }) {
+    console.log(countryIdToDelete);
+
+    return this.mapService.removeCountry(countryIdToDelete, mapId);
+  }
+
   @Get('/:id/picture_upload_url')
   async getUploadPicture(@Query() { mapId }) {
     console.log(mapId);

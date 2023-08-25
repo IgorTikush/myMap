@@ -6,7 +6,6 @@ import { PictureService } from '../picture/picture.service';
 import { S3Service } from '../s3/s3.service';
 
 @Controller('map')
-@UseGuards(AuthGuard('jwt'))
 export class MapController {
   constructor(
     private readonly mapService: MapService,
@@ -26,6 +25,7 @@ export class MapController {
   }
 
   @Patch('/:id/add_country')
+  @UseGuards(AuthGuard('jwt'))
   async addCountryToMap(@Body() { countryIdToAdd }, @Param() { id: mapId }) {
     console.log(countryIdToAdd);
 
@@ -33,6 +33,7 @@ export class MapController {
   }
 
   @Patch('/:id/delete_country')
+  @UseGuards(AuthGuard('jwt'))
   async deleteCountryFromMap(@Body() { countryIdToDelete }, @Param() { id: mapId }) {
     console.log(countryIdToDelete);
 
@@ -40,6 +41,7 @@ export class MapController {
   }
 
   @Get('/:id/picture_upload_url')
+  @UseGuards(AuthGuard('jwt'))
   async getUploadPicture(@Query() { mapId }) {
     console.log(mapId);
     // verify user has access to this map

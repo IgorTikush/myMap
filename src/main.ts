@@ -13,7 +13,8 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  // app.setGlobalPrefix('api');
+
+  app.setGlobalPrefix('api');
 
   app.enableCors({
     origin: true,
@@ -36,7 +37,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
+  await app.listen(3002);
 }
 
 bootstrap();

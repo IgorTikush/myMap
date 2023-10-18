@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { MapService } from './map.service';
 import { PictureService } from '../picture/picture.service';
 import { S3Service } from '../s3/s3.service';
+import * as https from 'https';
 
 @Controller('map')
 export class MapController {
@@ -46,5 +47,60 @@ export class MapController {
     console.log(mapId);
     // verify user has access to this map
     return this.s3Service.getSignedLinkToUpload(mapId);
+  }
+
+  @Get('/binance')
+  // @UseGuards(AuthGuard('jwt'))
+  async getBinance(@Query() { mapId }) {
+    console.log(mapId);
+    return new Promise((resolve, reject) => {
+      const baseObj = {
+        page: 1,
+        rows: 3,
+        publisherType: null,
+        asset: 'USDT',
+        tradeType: "SELL",
+        fiat: "UAH",
+        payTypes: ['Monobank', 'PrivatBank', 'ABank', 'PUMBBank', 'izibank', 'Sportbank'],
+      };
+
+      const stringData = JSON.stringify(baseObj);
+
+      const options = {
+        hostname: "p2p.binance.com",
+        port: 443,
+        path: "/bapi/c2c/v2/friendly/c2c/adv/search",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": stringData.length,
+        },
+      };
+
+      const req = https.request(options, (res) => {
+        let output = "";
+        res.on("data", (d) => {
+          output += d;
+        });
+
+        res.on('end', () => {
+          try {
+            const jsonOuput = JSON.parse(output);
+            console.log(jsonOuput);
+            resolve(jsonOuput);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
+
+      req.on("error", (error) => {
+        reject(error);
+      });
+
+      req.write(stringData);
+      req.end();
+    });
+    // verify user has access to this map
   }
 }
